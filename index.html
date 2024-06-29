@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Analysis</title>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="sentiment-form">
+        <textarea id="text-input" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Analyze Sentiment">
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('sentiment-form').onsubmit = function(e) {
+            e.preventDefault();
+            fetch('/predict', {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 'Sentiment: ' + data.sentiment;
+            });
+        };
+    </script>
+</body>
+</html>
